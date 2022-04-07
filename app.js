@@ -5,6 +5,10 @@ const PORT = 5400;
 
 require('./models/database.js');
 
+const { articleRouter } = require('./routes/articles.routes');
+
+app.use('/api/v1/articles', articleRouter);
+
 app.use('/', (req, res) => {
     return res.status(200).send({
         success: true,
