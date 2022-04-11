@@ -4,20 +4,20 @@ const articlesModel = new mongoose.Schema({
 
     articleTitle: {
         type: String,
-        required: true,
         minLength: 2,
         maxLength: 150,
-        unique: false
+        required: true,
+        unique: true
     },
     articleDescription: {
         type: String,
-        required: true,
-        minLength: 5
+        minLength: 5,
+        required: true
     },
     articleContent: {
         type: String,
-        required: true,
-        minLength: 5
+        minLength: 5,
+        required: true
     },
     articleMainImage: {
         type: String,

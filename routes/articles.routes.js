@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const articleRouter = Router();
 
-const { addArticle } = require('../controllers/articles.controller');
+const { auth } = require('../middlewares/auth.middleware');
+
+const { addArticle, updateArticle, getAllArticles, getArticleById, deleteArticle } = require('../controllers/articles.controller');
 
 /**
  * @description To create a new article
@@ -10,7 +12,7 @@ const { addArticle } = require('../controllers/articles.controller');
  * @type POST
  */
 
-articleRouter.post('/addArticle', addArticle);
+articleRouter.post('/addArticle', auth, addArticle);
 
 /**
  * @description To update an article
@@ -19,7 +21,7 @@ articleRouter.post('/addArticle', addArticle);
  * @type PUT
  */
 
-// articleRouter.put('/updateArticle/:article_id', updateArticle);
+articleRouter.put('/updateArticle/:id', auth, updateArticle);
 
 /**
  * @description To get all articles
@@ -28,7 +30,7 @@ articleRouter.post('/addArticle', addArticle);
  * @type GET
  */
 
-// articleRouter.get('/getAllArticles', getAllArticles);
+articleRouter.get('/getAllArticles', getAllArticles);
 
 /**
  * @description To get single article
@@ -37,7 +39,7 @@ articleRouter.post('/addArticle', addArticle);
  * @type GET
  */
 
-// articleRouter.get('/getArticleById/:id', getArticleById);
+articleRouter.get('/getArticleById/:id', getArticleById);
 
 /**
  * @description To delete an article
@@ -46,6 +48,6 @@ articleRouter.post('/addArticle', addArticle);
  * @type DELETE
  */
 
-// articleRouter.delete('/deleteArticle/:id', deleteArticle);
+articleRouter.delete('/deleteArticle/:id', auth, deleteArticle);
 
 exports.articleRouter = articleRouter;

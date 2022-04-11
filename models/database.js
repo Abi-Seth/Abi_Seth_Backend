@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const { DB } = require('../constants/index.constants');
 
-mongoose.connect('mongodb://localhost:27017/abiseth', {
+mongoose.connect(DB, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 }).then(() => {
