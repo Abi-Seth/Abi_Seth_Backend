@@ -6,8 +6,7 @@ const articlesModel = new mongoose.Schema({
         type: String,
         minLength: 2,
         maxLength: 150,
-        required: true,
-        unique: true
+        required: true
     },
     articleDescription: {
         type: String,

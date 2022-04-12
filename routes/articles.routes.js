@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const articleRouter = Router();
-
+const { uploadFile } = require('../utils/fileUploader');
+const file_upload = uploadFile("public/articles");
 const { auth } = require('../middlewares/auth.middleware');
 
-const { addArticle, updateArticle, getAllArticles, getArticleById, deleteArticle } = require('../controllers/articles.controller');
+const { addArticle, updateArticle, getAllArticles, getArticleById, deleteArticle, commentOnArticle, likeArticle, dislikeArticle } = require('../controllers/articles.controller');
 
 /**
  * @description To create a new article
@@ -12,7 +13,7 @@ const { addArticle, updateArticle, getAllArticles, getArticleById, deleteArticle
  * @type POST
  */
 
-articleRouter.post('/addArticle', auth, addArticle);
+articleRouter.post('/addArticle', auth, file_upload.single('articleMainImage'), addArticle);
 
 /**
  * @description To update an article
@@ -49,5 +50,32 @@ articleRouter.get('/getArticleById/:id', getArticleById);
  */
 
 articleRouter.delete('/deleteArticle/:id', auth, deleteArticle);
+
+/**
+ * @description To comment on an article
+ * @api /api/articles/commentOnArticle/:id
+ * @access Public
+ * @type POST
+ */
+
+articleRouter.post('/commentOnArticle/:id', commentOnArticle);
+
+/**
+ * @description To like an article
+ * @api /api/articles/likeArticle/:id
+ * @access Public
+ * @type POST
+ */
+
+articleRouter.post('/likeArticle/:id', likeArticle);
+
+/**
+ * @description To dislike an article
+ * @api /api/articles/dislikeArticle/:id
+ * @access Public
+ * @type POST
+ */
+
+articleRouter.post('/dislikeArticle/:id', dislikeArticle);
 
 exports.articleRouter = articleRouter;

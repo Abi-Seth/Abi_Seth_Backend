@@ -1,6 +1,7 @@
 const { Router } = require('express');
-
 const adminRouter = Router();
+const { uploadFile } = require('../utils/fileUploader');
+const file_upload = uploadFile("public/admin");
 const { auth } = require('../middlewares/auth.middleware');
 const { addAdministrator, updateAdministrator, authenaticateAdministrator, getOneAdministrator, deleteAdministrator, getAllAdministrators } =  require('../controllers/admin.controller');
 
@@ -20,7 +21,7 @@ adminRouter.post('/addAdmin', auth, addAdministrator);
  * @type PUT
  */
 
-adminRouter.put('/updateAdmin/:adminId', auth, updateAdministrator);
+adminRouter.put('/updateAdmin/:adminId', auth, file_upload.single('profilePicture'), updateAdministrator);
 
 /**
  * @description To get one admin's info
