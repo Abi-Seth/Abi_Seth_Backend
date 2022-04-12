@@ -203,7 +203,7 @@ exports.commentOnArticle = async (req, res) => {
             })
         }
 
-        const validCommentInput = await validateArticleCommentRegisteration(_.pick(req.body, ['commenterName', 'commenterEmail', 'commenterContent']));
+        const validCommentInput = await validateArticleCommentRegisteration(_.pick(req.body, ['commenterName', 'commenterEmail', 'commentContent']));
 
         if (validCommentInput.error) {
             return res.send(validCommentInput.error.details[0].message);
@@ -211,9 +211,9 @@ exports.commentOnArticle = async (req, res) => {
 
         let newComment = {
             commentId: v4(),
-            commentName: comment.commenterName,
+            commenterName: comment.commenterName,
             commenterEmail: comment.commenterEmail,
-            commenterContent: comment.commenterContent,
+            commentContent: comment.commentContent,
         }
 
         article.articleComments = [...article.articleComments, newComment];
@@ -298,7 +298,7 @@ exports.dislikeArticle = async (req, res) => {
             })
         }
 
-        if (article.articleLikes) {
+        if (article.articleLikes == 0) {
             return res.status(404).send({
                 success: false,
                 status: 404,
