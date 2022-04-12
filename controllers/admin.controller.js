@@ -2,6 +2,7 @@ const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const { Admin } = require('../models/admin.model');
+const { APP_DOMAIN } = require('../constants/index.constants');
 const { validateAdminRegisteration, validateAdminAuthenatication, validateAdminUpdation } = require('../validators/admin.validator');
 
 exports.addAdministrator = async (req, res) => {
@@ -118,7 +119,6 @@ exports.updateAdministrator = async (req, res) => {
             }
 
             let newpassword = '';
-            let newprofile = req.body.profilePicture;
 
             if (req.body.password !== '') {
                 const salt = await bcrypt.genSalt(10);
@@ -127,15 +127,51 @@ exports.updateAdministrator = async (req, res) => {
                 newpassword = admin.password;
             }
 
-            if (newprofile == undefined || newprofile == '') {
-                newprofile = admin.profilePicture;
+            let currentProfilePicture = req.file;
+            let profilePicturePath;
+            let imageInfo;
+
+            //upload image
+            if (!currentProfilePicture) {
+                if (admin.profilePicture != `${APP_DOMAIN}public/admin/defaultAvatar.png`) {
+                    profilePicturePath = admin.profilePicture;
+                } else {
+                    profilePicturePath = `${APP_DOMAIN}public/admin/defaultAvatar.png`;
+                }
+
+                imageInfo = {
+                    "secure_url": profilePicturePath,
+                }
+            } else {
+
+                if (admin.profilePicture != `${APP_DOMAIN}public/admin/defaultAvatar.png`) {
+
+                    let file = admin.profilePicture;
+                    let filenametodel = file.split('/')[6];
+                    let deletefile = 'public/admin/'+filenametodel;
+                                    
+                    fs.unlink(deletefile, (err) => {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        }
+            
+                    })
+
+                }
+                
+                profilePicturePath = `${APP_DOMAIN}public/admin/${req.file.filename}`;
+
+                imageInfo = {
+                    "secure_url": profilePicturePath
+                }
             }
 
             let updatedAdmin = await Admin.findOneAndUpdate({ _id: adminId }, {
                 username: req.body.username,
                 email: req.body.email,
                 password: newpassword,
-                profilePicture: newprofile
+                profilePicture: imageInfo.secure_url
             }, { new: true })
 
             res.status(200).send({

@@ -2,7 +2,8 @@ const _ = require('lodash');
 const fs = require('fs');
 const { v4 } = require('uuid');
 const { Articles } = require('../models/articles.model');
-const { validateArticleRegisteration } = require('../validators/articles.validator');
+const { APP_DOMAIN } = require('../constants/index.constants')
+;const { validateArticleRegisteration, validateArticleCommentRegisteration } = require('../validators/articles.validator');
 
 exports.addArticle = async (req, res) => {
 
@@ -14,6 +15,8 @@ exports.addArticle = async (req, res) => {
         if (validArticleInput.error) {
             return res.send(validArticleInput.error.details[0].message);
         }
+
+        article.articleMainImage = `${APP_DOMAIN}public/articles/${req.file.filename}`;
 
         const newArticle = new Articles(article);
 
@@ -166,6 +169,151 @@ exports.deleteArticle = async (req, res) => {
                     success: true,
                     status: 200,
                     message: 'Article deleted successfully!'
+                })
+            })
+            .catch((err) => {
+                res.status(400).send({
+                    success: false,
+                    status: 400,
+                    message: err.message
+                })
+            })
+
+    } catch(err) {
+        res.status(400).send({
+            success: false,
+            status: 400,
+            message: err.message
+        })
+    }
+}
+
+exports.commentOnArticle = async (req, res) => {
+    try {
+        const articleId = req.params.id;
+        const comment = req.body;
+
+        const article = await Articles.findById(articleId)
+
+        if (!article) {
+            return res.status(404).send({
+                success: false,
+                status: 404,
+                message: 'Article not found!'
+            })
+        }
+
+        const validCommentInput = await validateArticleCommentRegisteration(_.pick(req.body, ['commenterName', 'commenterEmail', 'commentContent']));
+
+        if (validCommentInput.error) {
+            return res.send(validCommentInput.error.details[0].message);
+        }
+
+        let newComment = {
+            commentId: v4(),
+            commenterName: comment.commenterName,
+            commenterEmail: comment.commenterEmail,
+            commentContent: comment.commentContent,
+        }
+
+        article.articleComments = [...article.articleComments, newComment];
+
+        await article.save()
+            .then(() => {
+                res.status(200).send({
+                    success: true,
+                    status: 200,
+                    message: 'Commented article successfully!'
+                })
+            })
+            .catch((err) => {
+                res.status(400).send({
+                    success: false,
+                    status: 400,
+                    message: err.message
+                })
+            })
+
+    } catch(err) {
+        res.status(400).send({
+            success: false,
+            status: 400,
+            message: err.message
+        })
+    }
+}
+
+exports.likeArticle = async (req, res) => {
+    try {
+        const articleId = req.params.id
+
+        const article = await Articles.findById(articleId)
+
+        if (!article) {
+            return res.status(404).send({
+                success: false,
+                status: 404,
+                message: 'Article not found!'
+            })
+        }
+
+        article.articleLikes = article.articleLikes+1;
+
+        await article.save()
+            .then(() => {
+                res.status(200).send({
+                    success: true,
+                    status: 200,
+                    message: 'Article liked successfully!'
+                })
+            })
+            .catch((err) => {
+                res.status(400).send({
+                    success: false,
+                    status: 400,
+                    message: err.message
+                })
+            })
+
+    } catch(err) {
+        res.status(400).send({
+            success: false,
+            status: 400,
+            message: err.message
+        })
+    }
+}
+
+exports.dislikeArticle = async (req, res) => {
+    try {
+        const articleId = req.params.id
+
+        const article = await Articles.findById(articleId)
+
+        if (!article) {
+            return res.status(404).send({
+                success: false,
+                status: 404,
+                message: 'Article not found!'
+            })
+        }
+
+        if (article.articleLikes == 0) {
+            return res.status(404).send({
+                success: false,
+                status: 404,
+                message: 'This article has 0 likes!'
+            })
+        }
+
+        article.articleLikes = article.articleLikes-1;
+
+        await article.save()
+            .then(() => {
+                res.status(200).send({
+                    success: true,
+                    status: 200,
+                    message: 'Article unliked successfully!'
                 })
             })
             .catch((err) => {
