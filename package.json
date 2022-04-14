@@ -4,7 +4,7 @@
   "description": "My portfolio backend",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node app.js"
   },
   "author": "Abijuru Seth",
@@ -21,5 +21,10 @@
     "multer": "^1.4.4",
     "nodemailer": "^6.7.3",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^9.2.2"
   }
 }
