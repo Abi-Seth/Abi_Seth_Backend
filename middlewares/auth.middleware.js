@@ -21,9 +21,9 @@ function auth(req, res, next) {
         }
 
     } catch (err) {
-        res.status(400).send({
+        res.status(401).send({
             success: false,
-            status: 400,
+            status: 401,
             message: 'Invalid token && ' + err.message
         })
     }

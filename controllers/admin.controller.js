@@ -206,8 +206,8 @@ exports.getOneAdministrator = async (req, res) => {
         })
 
         if (!admin){
-            return res.send({
-                success: true,
+            return res.status(404).send({
+                success: false,
                 status: 404,
                 message: "Administrator not found!"
             })
