@@ -13,12 +13,14 @@ app.use(bodyParser.json({ limit: '100mb' }));
 const { articleRouter } = require('./routes/articles.routes');
 const { adminRouter } = require('./routes/admin.routes');
 const { messageRouter } = require('./routes/messages.routes');
+const { projectRouter } = require('./routes/projects.routes');
 
 app.use("/public", express.static("public"));
 
 app.use('/api/v1/articles', articleRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/messages', messageRouter);
+app.use('/api/v1/projects', projectRouter);
 
 app.use('/', (req, res) => {
     return res.status(200).send({
