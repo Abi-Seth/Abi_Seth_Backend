@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const PORT = 5400 | process.env.PORT;
+const PORT = 5400 || process.env.PORT;
 
 require('./models/database.js');
 
