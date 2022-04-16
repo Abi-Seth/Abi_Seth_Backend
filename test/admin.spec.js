@@ -5,7 +5,7 @@ const server = 'http://localhost:5400/';
 chai.should();
 chai.use(chaiHttp);
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU4MGU4YmMyZDM5OGExOTBjMjU4N2UiLCJ1c2VybmFtZSI6ImFiaXNldGgiLCJlbWFpbCI6ImFiaWhlbG9hZkBnbWFpbC5jb20iLCJwcm9maWxlUGljdHVyZSI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9wdWJsaWMvYWRtaW4vZGVmYXVsdEF2YXRhci5wbmciLCJpYXQiOjE2NDk5NDQ4MDUsImV4cCI6MTY1MDExNzYwNX0.9THOX9m2UEpY0PN4tHIP4Ki0et5L_rvd564Kyrm7sSM';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU4MGU4YmMyZDM5OGExOTBjMjU4N2UiLCJ1c2VybmFtZSI6ImFiaXNldGgiLCJlbWFpbCI6ImFiaWhlbG9hZkBnbWFpbC5jb20iLCJwcm9maWxlUGljdHVyZSI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9wdWJsaWMvYWRtaW4vZGVmYXVsdEF2YXRhci5wbmciLCJpYXQiOjE2NTAxMjgxNDgsImV4cCI6MTY1MDMwMDk0OH0.paB8b74aIW7G8ueDmTonraAPTYSE3emuNY5eySGG2fk';
 
 describe('GET /api/v1/admin/getAllAdmins', () => {
 
@@ -323,7 +323,7 @@ describe('DELETE /api/v1/admin/deleteAdmin/:adminId', () => {
      */
 
     it('It should DELETE one administrator (by id)', (done) => {
-        const adminId = '62583d080843b09374118af7';
+        const adminId = '62583d050843b09374118af1';
 
         chai.request(server)
             .delete(`api/v1/admin/deleteAdmin/${adminId}`)
