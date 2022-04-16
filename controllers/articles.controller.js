@@ -10,13 +10,23 @@ exports.addArticle = async (req, res) => {
     try {
         const article = req.body;
 
+        const duplicateArticleTitle = await Articles.findOne({ articleTitle: req.body.articleTitle })
+
+        if (duplicateArticleTitle) {
+            return res.status(400).send({
+                success: false,
+                status: 400,
+                message: 'Article title already exists!'
+            })
+        }
+
+        article.articleMainImage = `${APP_DOMAIN}public/articles/${req.file.filename}`;
+
         const validArticleInput = await validateArticleRegisteration(_.pick(article, ['articleTitle', 'articleDescription', 'articleContent', 'articleMainImage']));
 
         if (validArticleInput.error) {
             return res.send(validArticleInput.error.details[0].message);
         }
-
-        article.articleMainImage = `${APP_DOMAIN}public/articles/${req.file.filename}`;
 
         const newArticle = new Articles(article);
 
@@ -151,9 +161,9 @@ exports.getArticleById = async (req, res) => {
 
 exports.deleteArticle = async (req, res) => {
     try {
-        const articleId = req.params.id
+        const articleId = req.params.id;
 
-        const article = await Articles.findById(articleId)
+        const article = await Articles.findById(articleId);
 
         if (!article) {
             return res.status(404).send({
@@ -299,9 +309,9 @@ exports.dislikeArticle = async (req, res) => {
         }
 
         if (article.articleLikes == 0) {
-            return res.status(404).send({
+            return res.status(400).send({
                 success: false,
-                status: 404,
+                status: 400,
                 message: 'This article has 0 likes!'
             })
         }
