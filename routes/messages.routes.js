@@ -15,7 +15,7 @@ messageRouter.post('/addMessage', addMessage);
 
 /**
  * @description To answer to a message
- * @api /api/v1/messages/answer
+ * @api /api/v1/messages/answerMessage
  * @access Private
  * @type POST
  */
@@ -33,7 +33,7 @@ messageRouter.get('/getAllMessages', auth, getAllMessages);
 
 /**
  * @description To delete a message
- * @api /api/v1/messages/deleteMessage
+ * @api /api/v1/messages/deleteMessage/:id
  * @access Private
  * @type DELETE
  */

@@ -17,9 +17,9 @@ exports.addMessage = async (req, res) => {
         const newMessage = await Messages(_.pick(message, ['messageNames', 'messageEmail', 'messageContent']));
         await newMessage.save()
             .then(() => {
-                res.status(200).send({
+                res.status(201).send({
                     success: true,
-                    status: 200,
+                    status: 201,
                     message: 'Message successfully sent!',
                     data: newMessage
                 })
@@ -79,7 +79,7 @@ exports.answerMessage = async (req, res) => {
             })
         }
 
-        if (message.MessageAnswered == 'yes') {
+        if (message.messageAnswered == 'yes') {
             return res.status(400).send({
                 success: false,
                 status: 400,
