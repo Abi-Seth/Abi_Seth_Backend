@@ -1,0 +1,108 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the documentation for Abi-Seth Portfolio APIs",
+        "version": "1.0.0",
+        "title": "ABIJURU Seth",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "abiheloaf@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "abiseth-portfolio.herokuapp.com",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Administration",
+            "description": "All APIS which are related to administration privileges and roles.",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "Articles",
+            "description": "All APIS which are related to articles or blogs",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "Messages",
+            "description": "All APIS which are related to messaging between the Blog admin and users",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "Projects",
+            "description": "All APIS which are related to projects developed by the administrator",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "schemes": ["https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/api/v1/admin/addAdmin": {
+            "post": {
+                "tags": ["Administration"],
+                "summary": "Register new administrator",
+                "description": "Register a new user and add administration privileges to the user",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object that we want to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["username", "email", "password"],
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "profilePicture": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "403": {
+                        "description": "Admin with details ( username / email ) already exist"
+                    },
+                    "404": {
+                        "description": "Admin not found"
+                    }
+                }
+            }
+        }
+    }
+}
