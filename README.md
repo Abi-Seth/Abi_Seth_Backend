@@ -1,5 +1,5 @@
 <div align="center">
-  <h3 align="center">Abi-Seth Portfolio Backend</h3>
+  <h2>Abi-Seth Portfolio Backend</h2>
 </div>
 
 ### Installation
