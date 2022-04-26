@@ -1,0 +1,1058 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the documentation for Abi-Seth Portfolio APIs",
+        "version": "1.0.0",
+        "title": "ABIJURU Seth",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "abiheloaf@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "abiseth-portfolio.herokuapp.com",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Administration",
+            "description": "All APIS which are related to administration privileges and roles.",
+            "externalDocs": {
+                "description": "Portfolio administration:",
+                "url": "https://abiseth.vercel.app/dashboard.html"
+            }
+        },
+        {
+            "name": "Articles",
+            "description": "All APIS which are related to articles or blogs",
+            "externalDocs": {
+                "description": "Portfolio blogs:",
+                "url": "https://abiseth.vercel.app/blogs.html"
+            }
+        },
+        {
+            "name": "Messages",
+            "description": "All APIS which are related to messaging between the Blog admin and users",
+            "externalDocs": {
+                "description": "Portfolio messages:",
+                "url": "https://abiseth.vercel.app/dashboard.html"
+            }
+        },
+        {
+            "name": "Projects",
+            "description": "All APIS which are related to projects developed by the administrator",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "https://abiseth.vercel.app/index.html#work"
+            }
+        }
+    ],
+    "schemes": ["https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/api/v1/admin/addAdmin": {
+            "post": {
+                "tags": ["Administration"],
+                "summary": "Register new administrator",
+                "description": "Register a new user and add administration privileges to the user",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object that we want to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["username", "email", "password"],
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Admin created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized! Please first login"
+                    },
+                    "403": {
+                        "description": "Admin with details ( username / email ) already exist"
+                    },
+                    "404": {
+                        "description": "Admin not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/updateAdmin/{adminId}": {
+            "put": {
+                "tags": ["Administration"],
+                "summary": "Update an existing administrator",
+                "description": "Update an existing administrator data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "adminId",
+                        "description": "the adminId of the admin to update",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object that we want to be update",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["username", "email", "password"],
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "in": "formData",
+                        "name": "profilePicture",
+                        "description": "admin profile picture",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "consumes": "multipart/form-data"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin updated successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "403": {
+                        "description": "Admin with details ( username / email ) already exist"
+                    },
+                    "404": {
+                        "description": "Admin not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/getOneAdmin/{adminId}": {
+            "get": {
+                "tags": ["Administration"],
+                "summary": "Get an existing administrator",
+                "description": "Get an existing administrator data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "adminId",
+                        "description": "the adminId of the admin to get",
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin found"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Admin not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/deleteAdmin/{adminId}": {
+            "delete": {
+                "tags": ["Administration"],
+                "summary": "Delete an existing administrator",
+                "description": "Delete an existing administrator data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "adminId",
+                        "description": "the adminId of the admin to delete",
+                        "required": true
+                    },
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin deleted successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Admin not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/getAllAdmins": {
+            "get": {
+                "tags": ["Administration"],
+                "summary": "Get all administrators",
+                "description": "Get all administrators data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All administrators"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/authenaticate": {
+            "post": {
+                "tags": ["Administration"],
+                "summary": "Authenaticate an existing administrator",
+                "description": "Authenaticate an existing administrator",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object that we want to be authenaticated",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["email", "password"],
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "You are logged in"
+                    },
+                    "400": {
+                        "description": "Incorrect email or password"
+                    },
+                    "404": {
+                        "description": "Incorrect email or password"
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/addArticle": {
+            "post": {
+                "tags": ["Articles"],
+                "summary": "Create a new article",
+                "description": "Create and publish a new article or blog",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Article object that we want to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["articleTitle", "articleDescription", "articleContent"],
+                            "properties": {
+                                "articleTitle": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "articleDescription": {
+                                    "type": "string"
+                                },
+                                "articleContent": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "in": "formData",
+                        "name": "articleMainImage",
+                        "description": "article main banner picture",
+                        "required": true,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "consumes": "multipart/form-data"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Article created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized! Please first login"
+                    },
+                    "403": {
+                        "description": "Admin with details ( username / email ) already exist"
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/updateArticle/{id}": {
+            "put": {
+                "tags": ["Articles"],
+                "summary": "Update an existing article",
+                "description": "Update an existing article or blog",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the article id of the article to update",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Article object that we want to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["articleTitle", "articleDescription", "articleContent"],
+                            "properties": {
+                                "articleTitle": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "articleDescription": {
+                                    "type": "string"
+                                },
+                                "articleContent": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "in": "formData",
+                        "name": "articleMainImage",
+                        "description": "article main banner picture",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "consumes": "multipart/form-data"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized! Please first login"
+                    },
+                    "403": {
+                        "description": "Admin with details ( username / email ) already exist"
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/getAllArticles": {
+            "get": {
+                "tags": ["Articles"],
+                "summary": "Get all articles",
+                "description": "Get all articles data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "All articles"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/getArticleById/{id}": {
+            "get": {
+                "tags": ["Articles"],
+                "summary": "Get article by id",
+                "description": "Get article data by id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the article id of the article to get",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article found"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/deleteArticle/{id}": {
+            "delete": {
+                "tags": ["Articles"],
+                "summary": "Delete article by id",
+                "description": "Delete article data by id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the article id of the article to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article deleted successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/commentOnArticle/{id}": {
+            "post": {
+                "tags": ["Articles"],
+                "summary": "Add comment to an article",
+                "description": "Add comment to an article data by id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the article id of the article to comment to",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Comment object that we want to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["commenterName", "commenterEmail", "commentContent"],
+                            "properties": {
+                                "commenterName": {
+                                    "type": "string"
+                                },
+                                "commenterEmail": {
+                                    "type": "string"
+                                },
+                                "commentContent": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Commented article successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/likeArticle/{id}": {
+            "post": {
+                "tags": ["Articles"],
+                "summary": "Add like to an article",
+                "description": "Add like to an article data by id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the article id of the article to like",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article liked successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/articles/dislikeArticle/{id}": {
+            "post": {
+                "tags": ["Articles"],
+                "summary": "Remove like to an article",
+                "description": "Remove like to an article data by id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the article id of the article to unlike",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article unliked successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/messages/addMessage": {
+            "post": {
+                "tags": ["Messages"],
+                "summary": "Add a new message",
+                "description": "Add a new message",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Message object that we want to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["messageNames", "messageEmail", "messageContent"],
+                            "properties": {
+                                "messageNames": {
+                                    "type": "string"
+                                },
+                                "messageEmail": {
+                                    "type": "string"
+                                },
+                                "messageContent": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Message successfully sent"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/v1/messages/answerMessage/{id}": {
+            "post": {
+                "tags": ["Messages"],
+                "summary": "Answer a message",
+                "description": "Answer a message",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the messageId of the message to answer",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Message object that we want to be answered",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["messageHeading", "messageContent"],
+                            "properties": {
+                                "messageHeading": {
+                                    "type": "string"
+                                },
+                                "messageContent": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Message answered successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized! Please first login"
+                    },
+                    "403": {
+                        "description": "This message is already answered"
+                    },
+                    "404": {
+                        "description": "Message not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/messages/getAllMessages": {
+            "get": {
+                "tags": ["Messages"],
+                "summary": "Get all messages",
+                "description": "Get all messages",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "All messages"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }  
+                }
+            }
+        },
+        "/api/v1/messages/deleteMessage/{id}": {
+            "delete": {
+                "tags": ["Messages"],
+                "summary": "Delete a message",
+                "description": "Delete a message",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the messageId of the message to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Message deleted successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "This message is not found"
+                    } 
+                }
+            }
+        },
+        "/api/v1/projects/addProject": {
+            "post": {
+                "tags": ["Projects"],
+                "summary": "Create a new project",
+                "description": "Create and publish a new project",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Project object that we want to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["projectTitle", "projectDescription", "projectContent", "projectLinks"],
+                            "properties": {
+                                "projectTitle": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "projectDescription": {
+                                    "type": "string"
+                                },
+                                "projectContent": {
+                                    "type": "string"
+                                },
+                                "projectLinks": {
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "in": "formData",
+                        "name": "projectMainImage",
+                        "description": "project main banner picture",
+                        "required": true,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "consumes": "multipart/form-data"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Project created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized! Please first login"
+                    },
+                    "403": {
+                        "description": "Project with details ( project title ) already exist"
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/updateProject/{id}": {
+            "put": {
+                "tags": ["Projects"],
+                "summary": "Update an existing project",
+                "description": "Update an existing project",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the project id of the project to update",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Project object that we want to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["projectTitle", "projectDescription", "projectContent", "projectLinks"],
+                            "properties": {
+                                "projectTitle": {
+                                    "type": "string",
+                                    "uniqueItems": true
+                                },
+                                "projectDescription": {
+                                    "type": "string"
+                                },
+                                "projectContent": {
+                                    "type": "string"
+                                },
+                                "projectLinks": {
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "in": "formData",
+                        "name": "projectMainImage",
+                        "description": "project main banner picture",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "consumes": "multipart/form-data"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article updated successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized! Please first login"
+                    },
+                    "403": {
+                        "description": "Project with details ( project title ) already exist"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/getAllProjects": {
+            "get": {
+                "tags": ["Projects"],
+                "summary": "Get all projects",
+                "description": "Get all projects data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "All projects"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/getProjectById/{id}": {
+            "get": {
+                "tags": ["Projects"],
+                "summary": "Get project by id",
+                "description": "Get project data by id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the project id of the project to get",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project found"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/deleteProject/{id}": {
+            "delete": {
+                "tags": ["Projects"],
+                "summary": "Delete project by id",
+                "description": "Delete project data by id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "the project id of the project to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project deleted successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        }
+
+
+
+    }
+}
