@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/Abi-Seth/Abi_Seth_Backend.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs)
+
+
 <div align="center">
   <h2>Abi-Seth Portfolio Backend</h2>
 </div>
