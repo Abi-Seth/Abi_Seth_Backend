@@ -10,7 +10,8 @@ exports.addProject = async (req, res) => {
     try {
         const project = req.body;
 
-        project.projectMainImage = `${APP_DOMAIN}public/projects/${req.file.filename}`;
+        if (req.file.filename)
+            project.projectMainImage = `${APP_DOMAIN}public/projects/${req.file.filename}`;
         
         const validProjectInput = await validateProjectRegisteration(_.pick(project, ['projectTitle', 'projectDescription', 'projectContent', 'projectLinks', 'projectMainImage']));
 

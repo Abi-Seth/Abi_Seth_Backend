@@ -1,11 +1,12 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = 'http://localhost:5400/';
+const { APP_AUTH_TOKEN, APP_DOMAIN } = require('../constants/index.constants');
+const server = APP_DOMAIN;
 
 chai.should();
 chai.use(chaiHttp);
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU4MGU4YmMyZDM5OGExOTBjMjU4N2UiLCJ1c2VybmFtZSI6ImFiaXNldGgiLCJlbWFpbCI6ImFiaWhlbG9hZkBnbWFpbC5jb20iLCJwcm9maWxlUGljdHVyZSI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9wdWJsaWMvYWRtaW4vZGVmYXVsdEF2YXRhci5wbmciLCJpYXQiOjE2NTAyMTM3MTUsImV4cCI6MTY1MDM4NjUxNX0.uavBEz9YKlXjYtukA3JQh8zUQ2f8T2cVwZR9s01vUL4';
+const token = APP_AUTH_TOKEN;
 
 describe('GET /api/v1/admin/getAllAdmins', () => {
 

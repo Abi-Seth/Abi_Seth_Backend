@@ -8,3 +8,4 @@ exports.APP_DOMAIN = process.env.APP_DOMAIN;
 exports.APP_FRONTEND_DOMAIN = process.env.APP_FRONTEND_DOMAIN;
 exports.EMAIL = process.env.APP_EMAIL;
 exports.MAILSECRET = process.env.APP_MAILSECRET;
+exports.APP_AUTH_TOKEN = process.env.APP_AUTH_TOKEN;

@@ -20,7 +20,8 @@ exports.addArticle = async (req, res) => {
             })
         }
 
-        article.articleMainImage = `${APP_DOMAIN}public/articles/${req.file.filename}`;
+        if (req.file.filename)
+            article.articleMainImage = `${APP_DOMAIN}public/articles/${req.file.filename}`;
 
         const validArticleInput = await validateArticleRegisteration(_.pick(article, ['articleTitle', 'articleDescription', 'articleContent', 'articleMainImage']));
 
