@@ -214,7 +214,7 @@ describe('DELETE /api/v1/articles/deleteArticle/:id', () => {
      */
 
     it('It should DELETE one article (by id)', (done) => {
-        const articleId = '625af554805cd6a36711a734';
+        const articleId = '626a851d6f46b3868404829f';
 
         chai.request(server)
             .delete(`api/v1/articles/deleteArticle/${articleId}`)
