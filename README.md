@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/Emmanuel-Dufitumukiza/portfolio_backend.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs) [![codecov.io](https://codecov.io/github/Emmanuel-Dufitumukiza/portfolio_backend/coverage.svg?branch=main)](https://codecov.io/github/Emmanuel-Dufitumukiza/portfolio_backend)
+[![CircleCI](https://circleci.com/gh/Abi-Seth/Abi_Seth_Backend/.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs) [![codecov.io](https://codecov.io/github/Abi-Seth/Abi_Seth_Backend/coverage.svg?branch=main)](https://codecov.io/github/Abi-Seth/Abi_Seth_Backend/)
 
 
 <div align="center">
