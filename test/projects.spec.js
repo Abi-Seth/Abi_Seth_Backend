@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 const token = APP_AUTH_TOKEN;
 
-describe('POST /api/v1/projects/addProject', () => {
+describe('POST /api/v1/projects/', () => {
 
     /**
      * Should POST a new project
@@ -20,11 +20,11 @@ describe('POST /api/v1/projects/addProject', () => {
             projectTitle: `Project ${projectRad}`,
             projectDescription: `New project description ${projectRad}`,
             projectContent: `New project content ${projectRad}`,
-            projectMainImage: `http://localhost:5400/public/public/projects${projectRad}image.png`,
+            projectMainImage: `${APP_DOMAIN}public/public/projects${projectRad}image.png`,
             projectLinks: ['github', 'facebook', 'website']
         }
         chai.request(server)
-            .post("api/v1/projects/addProject")
+            .post("api/v1/projects/")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -41,7 +41,7 @@ describe('POST /api/v1/projects/addProject', () => {
     })
 });
 
-describe('GET /api/v1/projects/getAllProjects', () => {
+describe('GET /api/v1/projects/', () => {
 
     /**
      * Should GET all projects
@@ -50,7 +50,7 @@ describe('GET /api/v1/projects/getAllProjects', () => {
     it('It should GET all projects', (done) => {
 
         chai.request(server)
-            .get("api/v1/projects/getAllProjects")
+            .get("api/v1/projects/")
             .end((err, response) => {
                 response.should.have.status(200);
                 response.should.be.a('object');
@@ -67,7 +67,7 @@ describe('GET /api/v1/projects/getAllProjects', () => {
 
     it('It should NOT GET all projects', (done) => {
         chai.request(server)
-            .get("api/v1/projects/getProjects")
+            .get("api/v1/project/")
             .end((err, response) => {
                 response.should.have.status(200);
                 response.should.be.a('object');
@@ -78,17 +78,17 @@ describe('GET /api/v1/projects/getAllProjects', () => {
     })
 })
 
-describe('DELETE /api/v1/projects/deleteProject/:id', () => {
+describe('DELETE /api/v1/projects/:id', () => {
 
     /**
      * Should DELETE one project (by id)
      */
 
     it('It should DELETE one project (by id)', (done) => {
-        const projectId = '626a85dd6f46b38684048300';
+        const projectId = '6273b0c275ea8fa58f42451d';
 
         chai.request(server)
-            .delete(`api/v1/projects/deleteProject/${projectId}`)
+            .delete(`api/v1/projects/${projectId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -108,7 +108,7 @@ describe('DELETE /api/v1/projects/deleteProject/:id', () => {
     it('It should NOT DELETE a project that does not exist', (done) => {
         const projectId = '625c43c5559ce86eba7e76f0';
         chai.request(server)
-            .delete(`api/v1/projects/deleteProject/${projectId}`)
+            .delete(`api/v1/projects/${projectId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -122,7 +122,7 @@ describe('DELETE /api/v1/projects/deleteProject/:id', () => {
 
 })
 
-describe('PUT /api/v1/projects/updateProject/:id', () => {
+describe('PUT /api/v1/projects/:id', () => {
 
     /**
      * Should UPDATE a project
@@ -139,7 +139,7 @@ describe('PUT /api/v1/projects/updateProject/:id', () => {
             projectLinks: ['github', 'facebook', 'website']
         }
         chai.request(server)
-            .put(`api/v1/projects/updateProject/${projectId}`)
+            .put(`api/v1/projects/${projectId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -168,7 +168,7 @@ describe('PUT /api/v1/projects/updateProject/:id', () => {
             projectLinks: ['github', 'facebook', 'website']
         }
         chai.request(server)
-            .put(`api/v1/projects/updateProject/${projectId}`)
+            .put(`api/v1/projects/${projectId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -198,7 +198,7 @@ describe('PUT /api/v1/projects/updateProject/:id', () => {
             projectLinks: ['github', 'facebook', 'website']
         }
         chai.request(server)
-            .put(`api/v1/projects/updateProject/${projectId}`)
+            .put(`api/v1/projects/${projectId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -215,7 +215,7 @@ describe('PUT /api/v1/projects/updateProject/:id', () => {
 
 })
 
-describe('GET /api/v1/projects/getProjectById/:id', () => {
+describe('GET /api/v1/projects/:id', () => {
 
     /**
      * Should GET one project (by id)
@@ -225,7 +225,7 @@ describe('GET /api/v1/projects/getProjectById/:id', () => {
         const projectId = '6256e28de200694ace596f3c';
 
         chai.request(server)
-            .get(`api/v1/projects/getProjectById/${projectId}`)
+            .get(`api/v1/projects/${projectId}`)
             .end((err, response) => {
                 response.should.have.status(200);
                 response.should.be.a('object');
@@ -243,7 +243,7 @@ describe('GET /api/v1/projects/getProjectById/:id', () => {
     it('It should NOT GET a project that does not exist', (done) => {
         const projectId = 'aaa83d7762c3e740d629eaaa';
         chai.request(server)
-            .get(`api/v1/projects/getProjectById/${projectId}`)
+            .get(`api/v1/projects/${projectId}`)
             .end((err, response) => {
                 response.should.have.status(404);
                 response.body.should.have.property('success').eq(false);

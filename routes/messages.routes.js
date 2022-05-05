@@ -6,38 +6,38 @@ const { addMessage, getAllMessages, deleteMessage, answerMessage } =  require('.
 
 /**
  * @description To create a new message
- * @api /api/v1/messages/addMessage
+ * @api /api/v1/messages/
  * @access Public
  * @type POST
  */
 
-messageRouter.post('/addMessage', addMessage);
+messageRouter.post('/', addMessage);
 
 /**
  * @description To answer to a message
- * @api /api/v1/messages/answerMessage/:id
+ * @api /api/v1/messages/:id
  * @access Private
  * @type POST
  */
 
-messageRouter.post('/answerMessage/:id', auth, answerMessage);
+messageRouter.post('/:id', auth, answerMessage);
 
 /**
  * @description To get all the messages asked
- * @api /api/v1/messages/getAllMessages
+ * @api /api/v1/messages/
  * @access Private
  * @type GET
  */
 
-messageRouter.get('/getAllMessages', auth, getAllMessages);
+messageRouter.get('/', auth, getAllMessages);
 
 /**
  * @description To delete a message
- * @api /api/v1/messages/deleteMessage/:id
+ * @api /api/v1/messages/:id
  * @access Private
  * @type DELETE
  */
 
-messageRouter.delete('/deleteMessage/:id', auth, deleteMessage);
+messageRouter.delete('/:id', auth, deleteMessage);
 
 exports.messageRouter = messageRouter;

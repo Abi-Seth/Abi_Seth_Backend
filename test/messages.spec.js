@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 const token = APP_AUTH_TOKEN;
 
-describe('POST /api/v1/messages/addMessage', () => {
+describe('POST /api/v1/messages/', () => {
 
     /**
      * Should POST a new message
@@ -22,7 +22,7 @@ describe('POST /api/v1/messages/addMessage', () => {
             messageContent: `New message content ${messageRad}`
         }
         chai.request(server)
-            .post("api/v1/messages/addMessage")
+            .post("api/v1/messages/")
             .send(newMessage)
             .end((err, response) => {
                 response.should.have.status(201);
@@ -36,7 +36,7 @@ describe('POST /api/v1/messages/addMessage', () => {
     })
 });
 
-describe('GET /api/v1/messages/getAllMessages', () => {
+describe('GET /api/v1/messages/', () => {
 
     /**
      * Should GET all messages
@@ -45,7 +45,7 @@ describe('GET /api/v1/messages/getAllMessages', () => {
     it('It should GET all messages', (done) => {
 
         chai.request(server)
-            .get("api/v1/messages/getAllMessages")
+            .get("api/v1/messages/")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -65,7 +65,7 @@ describe('GET /api/v1/messages/getAllMessages', () => {
 
     it('It should NOT GET all messages', (done) => {
         chai.request(server)
-            .get("api/v1/messages/getMessages")
+            .get("api/v1/messages/getAllMessages")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -79,17 +79,17 @@ describe('GET /api/v1/messages/getAllMessages', () => {
     })
 })
 
-describe('DELETE /api/v1/messages/deleteMessage/:id', () => {
+describe('DELETE /api/v1/messages/:id', () => {
 
     /**
      * Should DELETE one message (by id)
      */
 
     it('It should DELETE one message (by id)', (done) => {
-        const messageId = '626a85206f46b386840482b6';
+        const messageId = '6273a2dc2b77f8e4bcb5e5a7';
 
         chai.request(server)
-            .delete(`api/v1/messages/deleteMessage/${messageId}`)
+            .delete(`api/v1/messages/${messageId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -109,7 +109,7 @@ describe('DELETE /api/v1/messages/deleteMessage/:id', () => {
     it('It should NOT DELETE a message that does not exist', (done) => {
         const messageId = '625c43c5559ce86eba7e76f0';
         chai.request(server)
-            .delete(`api/v1/messages/deleteMessage/${messageId}`)
+            .delete(`api/v1/messages/${messageId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -123,7 +123,7 @@ describe('DELETE /api/v1/messages/deleteMessage/:id', () => {
 
 })
 
-describe('POST /api/v1/messages/answerMessage/:id', () => {
+describe('POST /api/v1/messages/:id', () => {
 
     /**
      * Should POST a reply to a message
@@ -131,7 +131,7 @@ describe('POST /api/v1/messages/answerMessage/:id', () => {
 
     it('It should POST a reply to a message', (done) => {
         const replyRad = Math.floor(Math.random()*1000);
-        const messageId = '626a844b6f46b38684048275';
+        const messageId = '6273a222d82044c0dcd282e7';
 
         const newReply = {
             messageHeading: `Message heading ${replyRad}`,
@@ -139,7 +139,7 @@ describe('POST /api/v1/messages/answerMessage/:id', () => {
         }
 
         chai.request(server)
-            .post(`api/v1/messages/answerMessage/${messageId}`)
+            .post(`api/v1/messages/${messageId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -167,7 +167,7 @@ describe('POST /api/v1/messages/answerMessage/:id', () => {
         }
 
         chai.request(server)
-            .post(`api/v1/messages/answerMessage/${messageId}`)
+            .post(`api/v1/messages/${messageId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -195,7 +195,7 @@ describe('POST /api/v1/messages/answerMessage/:id', () => {
         }
 
         chai.request(server)
-            .post(`api/v1/messages/answerMessage/${messageId}`)
+            .post(`api/v1/messages/${messageId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })

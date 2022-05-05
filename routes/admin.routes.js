@@ -7,48 +7,48 @@ const { addAdministrator, updateAdministrator, authenaticateAdministrator, getOn
 
 /**
  * @description To create a new admin
- * @api /api/admin/addAdmin
+ * @api /api/admin/
  * @access Private
  * @type POST
  */
 
-adminRouter.post('/addAdmin', auth, addAdministrator);
+adminRouter.post('/', auth, addAdministrator);
 
 /**
  * @description To update admin info
- * @api /api/admin/updateAdmin/:adminId
+ * @api /api/admin/:adminId
  * @access Private
  * @type PUT
  */
 
-adminRouter.put('/updateAdmin/:adminId', auth, file_upload.single('profilePicture'), updateAdministrator);
+adminRouter.put('/:adminId', auth, file_upload.single('profilePicture'), updateAdministrator);
 
 /**
  * @description To get one admin's info
- * @api /api/admin/getOneAdmin/:adminId
+ * @api /api/admin/:adminId
  * @access Private
  * @type GET
  */
 
-adminRouter.get('/getOneAdmin/:adminId', auth, getOneAdministrator);
+adminRouter.get('/:adminId', auth, getOneAdministrator);
 
 /**
  * @description To delete one admin's info
- * @api /api/admin/deleteAdmin/:adminId
+ * @api /api/admin/:adminId
  * @access Private
  * @type DELETE
  */
 
-adminRouter.delete('/deleteAdmin/:adminId', auth, deleteAdministrator);
+adminRouter.delete('/:adminId', auth, deleteAdministrator);
 
 /**
  * @description To get all admins' info
- * @api /api/admin/getAllAdmins
+ * @api /api/admin/
  * @access Private
  * @type GET
  */
 
-adminRouter.get('/getAllAdmins', auth, getAllAdministrators);
+adminRouter.get('/', auth, getAllAdministrators);
 
 /**
  * @description To login an admin

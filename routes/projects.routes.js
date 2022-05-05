@@ -8,21 +8,21 @@ const { addProject, updateProject, getAllProjects, getProjectById, deleteProject
 
 /**
  * @description To create a new project
- * @api /api/projects/addProject
+ * @api /api/projects/
  * @access Private
  * @type POST
  */
 
-projectRouter.post('/addProject', auth, file_upload.single('projectMainImage'), addProject);
+projectRouter.post('/', auth, file_upload.single('projectMainImage'), addProject);
 
 /**
  * @description To update a project
- * @api /api/projects/updateProject
+ * @api /api/projects/
  * @access Private
  * @type PUT
  */
 
-projectRouter.put('/updateProject/:id', auth, updateProject);
+projectRouter.put('/:id', auth, updateProject);
 
 /**
  * @description To get all projects
@@ -31,7 +31,7 @@ projectRouter.put('/updateProject/:id', auth, updateProject);
  * @type GET
  */
 
-projectRouter.get('/getAllProjects', getAllProjects);
+projectRouter.get('/', getAllProjects);
 
 /**
  * @description To get single project
@@ -40,7 +40,7 @@ projectRouter.get('/getAllProjects', getAllProjects);
  * @type GET
  */
 
-projectRouter.get('/getProjectById/:id', getProjectById);
+projectRouter.get('/:id', getProjectById);
 
 /**
  * @description To delete an project
@@ -49,6 +49,6 @@ projectRouter.get('/getProjectById/:id', getProjectById);
  * @type DELETE
  */
 
-projectRouter.delete('/deleteProject/:id', auth, deleteProject);
+projectRouter.delete('/:id', auth, deleteProject);
 
 exports.projectRouter = projectRouter;

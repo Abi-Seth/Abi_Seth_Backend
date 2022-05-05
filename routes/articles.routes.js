@@ -8,30 +8,30 @@ const { addArticle, updateArticle, getAllArticles, getArticleById, deleteArticle
 
 /**
  * @description To create a new article
- * @api /api/articles/addArticle
+ * @api /api/articles/
  * @access Private
  * @type POST
  */
 
-articleRouter.post('/addArticle', auth, file_upload.single('articleMainImage'), addArticle);
+articleRouter.post('/', auth, file_upload.single('articleMainImage'), addArticle);
 
 /**
  * @description To update an article
- * @api /api/articles/updateArticles
+ * @api /api/articles/
  * @access Private
  * @type PUT
  */
 
-articleRouter.put('/updateArticle/:id', auth, updateArticle);
+articleRouter.put('/:id', auth, updateArticle);
 
 /**
  * @description To get all articles
- * @api /api/articles/getAllArticles
+ * @api /api/articles/
  * @access Public
  * @type GET
  */
 
-articleRouter.get('/getAllArticles', getAllArticles);
+articleRouter.get('/', getAllArticles);
 
 /**
  * @description To get single article
@@ -40,7 +40,7 @@ articleRouter.get('/getAllArticles', getAllArticles);
  * @type GET
  */
 
-articleRouter.get('/getArticleById/:id', getArticleById);
+articleRouter.get('/:id', getArticleById);
 
 /**
  * @description To delete an article
@@ -49,33 +49,33 @@ articleRouter.get('/getArticleById/:id', getArticleById);
  * @type DELETE
  */
 
-articleRouter.delete('/deleteArticle/:id', auth, deleteArticle);
+articleRouter.delete('/:id', auth, deleteArticle);
 
 /**
  * @description To comment on an article
- * @api /api/articles/commentOnArticle/:id
+ * @api /api/articles/:id/comment
  * @access Public
  * @type POST
  */
 
-articleRouter.post('/commentOnArticle/:id', commentOnArticle);
+articleRouter.post('/:id/comment', commentOnArticle);
 
 /**
  * @description To like an article
- * @api /api/articles/likeArticle/:id
+ * @api /api/articles/:id/like
  * @access Public
  * @type POST
  */
 
-articleRouter.post('/likeArticle/:id', likeArticle);
+articleRouter.post('/:id/like', likeArticle);
 
 /**
  * @description To dislike an article
- * @api /api/articles/dislikeArticle/:id
+ * @api /api/articles/:id/dislike
  * @access Public
  * @type POST
  */
 
-articleRouter.post('/dislikeArticle/:id', dislikeArticle);
+articleRouter.post('/:id/dislike', dislikeArticle);
 
 exports.articleRouter = articleRouter;

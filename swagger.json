@@ -53,7 +53,7 @@
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {
-        "/api/v1/admin/addAdmin": {
+        "/api/v1/admin/": {
             "post": {
                 "tags": ["Administration"],
                 "summary": "Register new administrator",
@@ -111,9 +111,35 @@
                         "description": "Admin not found"
                     }
                 }
+            },
+            "get": {
+                "tags": ["Administration"],
+                "summary": "Get all administrators",
+                "description": "Get all administrators data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All administrators"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
             }
         },
-        "/api/v1/admin/updateAdmin/{adminId}": {
+        "/api/v1/admin/{adminId}": {
             "put": {
                 "tags": ["Administration"],
                 "summary": "Update an existing administrator",
@@ -184,9 +210,7 @@
                         "description": "Admin not found"
                     }
                 }
-            }
-        },
-        "/api/v1/admin/getOneAdmin/{adminId}": {
+            },
             "get": {
                 "tags": ["Administration"],
                 "summary": "Get an existing administrator",
@@ -221,9 +245,7 @@
                         "description": "Admin not found"
                     }
                 }
-            }
-        },
-        "/api/v1/admin/deleteAdmin/{adminId}": {
+            },
             "delete": {
                 "tags": ["Administration"],
                 "summary": "Delete an existing administrator",
@@ -256,34 +278,6 @@
                     },
                     "404": {
                         "description": "Admin not found"
-                    }
-                }
-            }
-        },
-        "/api/v1/admin/getAllAdmins": {
-            "get": {
-                "tags": ["Administration"],
-                "summary": "Get all administrators",
-                "description": "Get all administrators data",
-                "consumes": ["application/json"],
-                "produces": ["application/json"],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Authorization",
-                        "description": "bearer token for user authorization",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "All administrators"
-                    },
-                    "400": {
-                        "description": "Bad request"
                     }
                 }
             }
@@ -329,7 +323,7 @@
                 }
             }
         },
-        "/api/v1/articles/addArticle": {
+        "/api/v1/articles/": {
             "post": {
                 "tags": ["Articles"],
                 "summary": "Create a new article",
@@ -393,9 +387,25 @@
                         "description": "Admin with details ( username / email ) already exist"
                     }
                 }
+            },
+            "get": {
+                "tags": ["Articles"],
+                "summary": "Get all articles",
+                "description": "Get all articles data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "All articles"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
             }
         },
-        "/api/v1/articles/updateArticle/{id}": {
+        "/api/v1/articles/{id}": {
             "put": {
                 "tags": ["Articles"],
                 "summary": "Update an existing article",
@@ -465,27 +475,7 @@
                         "description": "Admin with details ( username / email ) already exist"
                     }
                 }
-            }
-        },
-        "/api/v1/articles/getAllArticles": {
-            "get": {
-                "tags": ["Articles"],
-                "summary": "Get all articles",
-                "description": "Get all articles data",
-                "consumes": ["application/json"],
-                "produces": ["application/json"],
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "All articles"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            }
-        },
-        "/api/v1/articles/getArticleById/{id}": {
+            },
             "get": {
                 "tags": ["Articles"],
                 "summary": "Get article by id",
@@ -511,9 +501,7 @@
                         "description": "Article not found"
                     }
                 }
-            }
-        },
-        "/api/v1/articles/deleteArticle/{id}": {
+            },
             "delete": {
                 "tags": ["Articles"],
                 "summary": "Delete article by id",
@@ -550,7 +538,7 @@
                 }
             }
         },
-        "/api/v1/articles/commentOnArticle/{id}": {
+        "/api/v1/articles/{id}/comment": {
             "post": {
                 "tags": ["Articles"],
                 "summary": "Add comment to an article",
@@ -599,7 +587,7 @@
                 }
             }
         },
-        "/api/v1/articles/likeArticle/{id}": {
+        "/api/v1/articles/{id}/like": {
             "post": {
                 "tags": ["Articles"],
                 "summary": "Add like to an article",
@@ -627,7 +615,7 @@
                 }
             }
         },
-        "/api/v1/articles/dislikeArticle/{id}": {
+        "/api/v1/articles/{id}/dislike": {
             "post": {
                 "tags": ["Articles"],
                 "summary": "Remove like to an article",
@@ -655,7 +643,7 @@
                 }
             }
         },
-        "/api/v1/messages/addMessage": {
+        "/api/v1/messages/": {
             "post": {
                 "tags": ["Messages"],
                 "summary": "Add a new message",
@@ -693,9 +681,35 @@
                         "description": "Bad request"
                     }
                 }
+            },
+            "get": {
+                "tags": ["Messages"],
+                "summary": "Get all messages",
+                "description": "Get all messages",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "bearer token for user authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "All messages"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }  
+                }
             }
         },
-        "/api/v1/messages/answerMessage/{id}": {
+        "/api/v1/messages/{id}": {
             "post": {
                 "tags": ["Messages"],
                 "summary": "Answer a message",
@@ -754,37 +768,7 @@
                         "description": "Message not found"
                     }
                 }
-            }
-        },
-        "/api/v1/messages/getAllMessages": {
-            "get": {
-                "tags": ["Messages"],
-                "summary": "Get all messages",
-                "description": "Get all messages",
-                "consumes": ["application/json"],
-                "produces": ["application/json"],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Authorization",
-                        "description": "bearer token for user authorization",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "All messages"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }  
-                }
-            }
-        },
-        "/api/v1/messages/deleteMessage/{id}": {
+            },
             "delete": {
                 "tags": ["Messages"],
                 "summary": "Delete a message",
@@ -821,7 +805,7 @@
                 }
             }
         },
-        "/api/v1/projects/addProject": {
+        "/api/v1/projects/": {
             "post": {
                 "tags": ["Projects"],
                 "summary": "Create a new project",
@@ -888,9 +872,25 @@
                         "description": "Project with details ( project title ) already exist"
                     }
                 }
+            },
+            "get": {
+                "tags": ["Projects"],
+                "summary": "Get all projects",
+                "description": "Get all projects data",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "All projects"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
             }
         },
-        "/api/v1/projects/updateProject/{id}": {
+        "/api/v1/projects/{id}": {
             "put": {
                 "tags": ["Projects"],
                 "summary": "Update an existing project",
@@ -966,27 +966,7 @@
                         "description": "Project not found"
                     }
                 }
-            }
-        },
-        "/api/v1/projects/getAllProjects": {
-            "get": {
-                "tags": ["Projects"],
-                "summary": "Get all projects",
-                "description": "Get all projects data",
-                "consumes": ["application/json"],
-                "produces": ["application/json"],
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "All projects"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            }
-        },
-        "/api/v1/projects/getProjectById/{id}": {
+            },
             "get": {
                 "tags": ["Projects"],
                 "summary": "Get project by id",
@@ -1012,9 +992,7 @@
                         "description": "Project not found"
                     }
                 }
-            }
-        },
-        "/api/v1/projects/deleteProject/{id}": {
+            },
             "delete": {
                 "tags": ["Projects"],
                 "summary": "Delete project by id",
@@ -1051,8 +1029,6 @@
                 }
             }
         }
-
-
 
     }
 }

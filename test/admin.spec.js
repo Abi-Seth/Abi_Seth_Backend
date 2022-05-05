@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 const token = APP_AUTH_TOKEN;
 
-describe('GET /api/v1/admin/getAllAdmins', () => {
+describe('GET /api/v1/admin/', () => {
 
     /**
      * Should GET all the administrators
@@ -16,7 +16,7 @@ describe('GET /api/v1/admin/getAllAdmins', () => {
 
     it('It should GET all the administrators', (done) => {
         chai.request(server)
-            .get("api/v1/admin/getAllAdmins")
+            .get("api/v1/admin/")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -38,7 +38,7 @@ describe('GET /api/v1/admin/getAllAdmins', () => {
 
     it('It should NOT GET all the administrators', (done) => {
         chai.request(server)
-            .get("api/v1/admin/getAdmins")
+            .get("api/v1/admins/")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -53,7 +53,7 @@ describe('GET /api/v1/admin/getAllAdmins', () => {
 
 });
 
-describe('POST /api/v1/admin/addAdmin', () => {
+describe('POST /api/v1/admin/', () => {
 
     /**
      * Should POST a new administrator
@@ -68,7 +68,7 @@ describe('POST /api/v1/admin/addAdmin', () => {
         }
 
         chai.request(server)
-            .post("api/v1/admin/addAdmin")
+            .post("api/v1/admin/")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -95,7 +95,7 @@ describe('POST /api/v1/admin/addAdmin', () => {
         }
 
         chai.request(server)
-            .post("api/v1/admin/addAdmin")
+            .post("api/v1/admin/")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -110,7 +110,7 @@ describe('POST /api/v1/admin/addAdmin', () => {
 
 })
 
-describe('PUT /api/v1/admin/updateAdmin/:id', () => {
+describe('PUT /api/v1/admin/:id', () => {
 
     /**
      * Should UPDATE an administrator
@@ -127,7 +127,7 @@ describe('PUT /api/v1/admin/updateAdmin/:id', () => {
         }
 
         chai.request(server)
-            .put(`api/v1/admin/updateAdmin/${adminId}`)
+            .put(`api/v1/admin/${adminId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -157,7 +157,7 @@ describe('PUT /api/v1/admin/updateAdmin/:id', () => {
         }
 
         chai.request(server)
-            .put(`api/v1/admin/updateAdmin/${adminId}`)
+            .put(`api/v1/admin/${adminId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -185,7 +185,7 @@ describe('PUT /api/v1/admin/updateAdmin/:id', () => {
         }
 
         chai.request(server)
-            .put(`api/v1/admin/updateAdmin/${adminId}`)
+            .put(`api/v1/admin/${adminId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -200,7 +200,7 @@ describe('PUT /api/v1/admin/updateAdmin/:id', () => {
 
 })
 
-describe('GET /api/v1/admin/getOneAdmin/:adminId', () => {
+describe('GET /api/v1/admin/:adminId', () => {
 
     /**
      * Should GET one administrator (by id)
@@ -210,7 +210,7 @@ describe('GET /api/v1/admin/getOneAdmin/:adminId', () => {
         const adminId = '62583d7762c3e740d629e214';
 
         chai.request(server)
-            .get(`api/v1/admin/getOneAdmin/${adminId}`)
+            .get(`api/v1/admin/${adminId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -230,7 +230,7 @@ describe('GET /api/v1/admin/getOneAdmin/:adminId', () => {
     it('It should NOT GET an administrator who does not exist', (done) => {
         const adminId = 'aaa83d7762c3e740d629eaaa';
         chai.request(server)
-            .get(`api/v1/admin/getOneAdmin/${adminId}`)
+            .get(`api/v1/admin/${adminId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -317,7 +317,7 @@ describe('POST /api/v1/admin/authenaticate', () => {
 })
 
 
-describe('DELETE /api/v1/admin/deleteAdmin/:adminId', () => {
+describe('DELETE /api/v1/admin/:adminId', () => {
 
     /**
      * Should DELETE one administrator (by id)
@@ -327,7 +327,7 @@ describe('DELETE /api/v1/admin/deleteAdmin/:adminId', () => {
         const adminId = '626a8d1c4d512ba8cb16f702';
 
         chai.request(server)
-            .delete(`api/v1/admin/deleteAdmin/${adminId}`)
+            .delete(`api/v1/admin/${adminId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -347,7 +347,7 @@ describe('DELETE /api/v1/admin/deleteAdmin/:adminId', () => {
     it('It should NOT DELETE an administrator who does not exist', (done) => {
         const adminId = 'aaa83d7762c3e740d629eaaa';
         chai.request(server)
-            .delete(`api/v1/admin/deleteAdmin/${adminId}`)
+            .delete(`api/v1/admin/${adminId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })

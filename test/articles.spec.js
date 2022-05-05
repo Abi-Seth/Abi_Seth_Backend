@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 const token = APP_AUTH_TOKEN;
 
-describe('POST /api/v1/articles/addArticle', () => {
+describe('POST /api/v1/articles/', () => {
 
     /**
      * Should POST a new article
@@ -20,10 +20,10 @@ describe('POST /api/v1/articles/addArticle', () => {
             articleTitle: `New article ${articleRad}`,
             articleDescription: `New article description ${articleRad}`,
             articleContent: `New article content ${articleRad}`,
-            articleMainImage: `http://localhost:5400/public/public/article${articleRad}image.png` 
+            articleMainImage: `${APP_DOMAIN}public/public/article${articleRad}image.png` 
         }
         chai.request(server)
-            .post("api/v1/articles/addArticle")
+            .post("api/v1/articles/")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -45,13 +45,13 @@ describe('POST /api/v1/articles/addArticle', () => {
 
     it('It should NOT POST an article duplicate article titles', (done) => {
         const newArticle = {
-            articleTitle: "Article two updated",
+            articleTitle: "New article 78",
             articleDescription: "Article description",
             articleContent: "Article content",
-            articleMainImage: "http://localhost:5400/public/public/updated_articleimage.png" 
+            articleMainImage: `${APP_DOMAIN}public/public/updated_articleimage.png` 
         }
         chai.request(server)
-            .post("api/v1/articles/addArticle")
+            .post("api/v1/articles/")
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -68,7 +68,7 @@ describe('POST /api/v1/articles/addArticle', () => {
 
 });
 
-describe('GET /api/v1/articles/getAllArticles', () => {
+describe('GET /api/v1/articles/', () => {
 
     /**
      * Should GET all articles
@@ -77,7 +77,7 @@ describe('GET /api/v1/articles/getAllArticles', () => {
     it('It should GET all articles', (done) => {
 
         chai.request(server)
-            .get("api/v1/articles/getAllArticles")
+            .get("api/v1/articles/")
             .end((err, response) => {
                 response.should.have.status(200);
                 response.should.be.a('object');
@@ -94,7 +94,7 @@ describe('GET /api/v1/articles/getAllArticles', () => {
 
     it('It should NOT GET all articles', (done) => {
         chai.request(server)
-            .get("api/v1/articles/getArticles")
+            .get("api/v1/article/")
             .end((err, response) => {
                 response.should.have.status(200);
                 response.should.be.a('object');
@@ -105,7 +105,7 @@ describe('GET /api/v1/articles/getAllArticles', () => {
     })
 })
 
-describe('PUT /api/v1/articles/updateArticle/:id', () => {
+describe('PUT /api/v1/articles/:id', () => {
 
     /**
      * Should UPDATE an article
@@ -119,11 +119,11 @@ describe('PUT /api/v1/articles/updateArticle/:id', () => {
             articleTitle: `Updated article ${articleRad}`,
             articleDescription: `Updated article description ${articleRad}`,
             articleContent: `Updated article content ${articleRad}`,
-            articleMainImage: `http://localhost:5400/public/public/updated_article${articleRad}image.png`
+            articleMainImage: `${APP_DOMAIN}/public/public/updated_article${articleRad}image.png`
         }
 
         chai.request(server)
-            .put(`api/v1/articles/updateArticle/${articleId}`)
+            .put(`api/v1/articles/${articleId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -142,16 +142,16 @@ describe('PUT /api/v1/articles/updateArticle/:id', () => {
      */
 
     it('It should NOT UPDATE an article duplicate article titles', (done) => {
-        const articleId = '625af557805cd6a36711a736';
+        const articleId = '6273a2d22b77f8e4bcb5e58f';
 
         const newArticle = {
-            articleTitle: "Article two updated",
+            articleTitle: "New article 78",
             articleDescription: "Article description",
             articleContent: "Article content",
-            articleMainImage: "http://localhost:5400/public/public/updated_article_image.png" 
+            articleMainImage: `${APP_DOMAIN}public/public/updated_article_image.png` 
         }
         chai.request(server)
-            .put(`api/v1/articles/updateArticle/${articleId}`)
+            .put(`api/v1/articles/${articleId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -168,7 +168,7 @@ describe('PUT /api/v1/articles/updateArticle/:id', () => {
 
 })
 
-describe('GET /api/v1/articles/getArticleById/:id', () => {
+describe('GET /api/v1/articles/:id', () => {
 
     /**
      * Should GET one article (by id)
@@ -178,7 +178,7 @@ describe('GET /api/v1/articles/getArticleById/:id', () => {
         const articleId = '625af557805cd6a36711a736';
 
         chai.request(server)
-            .get(`api/v1/articles/getArticleById/${articleId}`)
+            .get(`api/v1/articles/${articleId}`)
             .end((err, response) => {
                 response.should.have.status(200);
                 response.should.be.a('object');
@@ -196,7 +196,7 @@ describe('GET /api/v1/articles/getArticleById/:id', () => {
     it('It should NOT GET an article that does not exist', (done) => {
         const articleId = 'aaa83d7762c3e740d629eaaa';
         chai.request(server)
-            .get(`api/v1/articles/getArticleById/${articleId}`)
+            .get(`api/v1/articles/${articleId}`)
             .end((err, response) => {
                 response.should.have.status(404);
                 response.body.should.have.property('success').eq(false);
@@ -207,17 +207,17 @@ describe('GET /api/v1/articles/getArticleById/:id', () => {
 
 })
 
-describe('DELETE /api/v1/articles/deleteArticle/:id', () => {
+describe('DELETE /api/v1/articles/:id', () => {
 
     /**
      * Should DELETE one article (by id)
      */
 
     it('It should DELETE one article (by id)', (done) => {
-        const articleId = '626a851d6f46b3868404829f';
+        const articleId = '6273a21ed82044c0dcd282d0';
 
         chai.request(server)
-            .delete(`api/v1/articles/deleteArticle/${articleId}`)
+            .delete(`api/v1/articles/${articleId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -237,7 +237,7 @@ describe('DELETE /api/v1/articles/deleteArticle/:id', () => {
     it('It should NOT DELETE an article that does not exist', (done) => {
         const articleId = 'aaa83d7762c3e740d629eaaa';
         chai.request(server)
-            .delete(`api/v1/articles/deleteArticle/${articleId}`)
+            .delete(`api/v1/articles/${articleId}`)
             .set({ 
                 Authorization: `Bearer ${token}`
             })
@@ -251,7 +251,7 @@ describe('DELETE /api/v1/articles/deleteArticle/:id', () => {
 
 })
 
-describe('POST /api/v1/articles/commentOnArticle/:id', () => {
+describe('POST /api/v1/articles/:id/comment', () => {
 
     /**
      * Should POST a comment on an article
@@ -268,7 +268,7 @@ describe('POST /api/v1/articles/commentOnArticle/:id', () => {
         }
 
         chai.request(server)
-            .post(`api/v1/articles/commentOnArticle/${articleId}`)
+            .post(`api/v1/articles/${articleId}/comment`)
             .send(newComment)
             .end((err, response) => {
                 response.should.have.status(200);
@@ -294,7 +294,7 @@ describe('POST /api/v1/articles/commentOnArticle/:id', () => {
         }
 
         chai.request(server)
-            .post(`api/v1/articles/commentOnArticle/${articleId}`)
+            .post(`api/v1/articles/${articleId}/comment`)
             .send(newComment)
             .end((err, response) => {
                 response.should.have.status(404);
@@ -307,7 +307,7 @@ describe('POST /api/v1/articles/commentOnArticle/:id', () => {
 
 })
 
-describe('POST /api/v1/articles/likeArticle/:id', () => {
+describe('POST /api/v1/articles/:id/like', () => {
 
     /**
      * Should POST a like on an article
@@ -317,7 +317,7 @@ describe('POST /api/v1/articles/likeArticle/:id', () => {
         const articleId = '625af557805cd6a36711a736';
 
         chai.request(server)
-            .post(`api/v1/articles/likeArticle/${articleId}`)
+            .post(`api/v1/articles/${articleId}/like`)
             .end((err, response) => {
                 response.should.have.status(200);
                 response.should.be.a('object');
@@ -335,7 +335,7 @@ describe('POST /api/v1/articles/likeArticle/:id', () => {
         const articleId = 'aaaaf557805cd6a36711a736';
 
         chai.request(server)
-            .post(`api/v1/articles/likeArticle/${articleId}`)
+            .post(`api/v1/articles/${articleId}/like`)
             .end((err, response) => {
                 response.should.have.status(404);
                 response.should.be.a('object');
@@ -347,7 +347,7 @@ describe('POST /api/v1/articles/likeArticle/:id', () => {
 
 })
 
-describe('POST /api/v1/articles/dislikeArticle/:id', () => {
+describe('POST /api/v1/articles/:id/dislike', () => {
 
     /**
      * Should POST a dislike on an article
@@ -357,7 +357,7 @@ describe('POST /api/v1/articles/dislikeArticle/:id', () => {
         const articleId = '625af557805cd6a36711a736';
 
         chai.request(server)
-            .post(`api/v1/articles/dislikeArticle/${articleId}`)
+            .post(`api/v1/articles/${articleId}/dislike`)
             .end((err, response) => {
                 response.should.have.status(200);
                 response.should.be.a('object');
@@ -375,7 +375,7 @@ describe('POST /api/v1/articles/dislikeArticle/:id', () => {
         const articleId = '6256d74f123c6b1e4e694e88';
 
         chai.request(server)
-            .post(`api/v1/articles/dislikeArticle/${articleId}`)
+            .post(`api/v1/articles/${articleId}/dislike`)
             .end((err, response) => {
                 response.should.have.status(400);
                 response.should.be.a('object');
@@ -393,7 +393,7 @@ describe('POST /api/v1/articles/dislikeArticle/:id', () => {
         const articleId = 'aaaaf557805cd6a36711a736';
 
         chai.request(server)
-            .post(`api/v1/articles/dislikeArticle/${articleId}`)
+            .post(`api/v1/articles/${articleId}/dislike`)
             .end((err, response) => {
                 response.should.have.status(404);
                 response.should.be.a('object');

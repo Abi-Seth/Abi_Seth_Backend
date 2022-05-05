@@ -20,7 +20,7 @@ exports.addArticle = async (req, res) => {
             })
         }
 
-        if (req.file.filename)
+        if (req.file != undefined)
             article.articleMainImage = `${APP_DOMAIN}public/articles/${req.file.filename}`;
 
         const validArticleInput = await validateArticleRegisteration(_.pick(article, ['articleTitle', 'articleDescription', 'articleContent', 'articleMainImage']));
@@ -52,10 +52,10 @@ exports.addArticle = async (req, res) => {
 exports.updateArticle = async (req, res) => {
 
     try {
-        const articleId = req.params.id
+        const articleId = req.params.id;
         
-        const article = await Articles.findById(articleId)
-
+        const article = await Articles.findById(articleId);
+        
         if (!article) {
             return res.status(404).send({
                 success: false,
@@ -64,11 +64,13 @@ exports.updateArticle = async (req, res) => {
             })
         }
 
+        let updatedArticle = article;
+
         const duplicateArticleTitle = await Articles.findOne({
             _id: {
                 $ne: articleId
             },
-            articleTitle: req.body.articleTitle
+            articleTitle: updatedArticle.articleTitle
         })
 
         if (duplicateArticleTitle) {
@@ -79,13 +81,16 @@ exports.updateArticle = async (req, res) => {
             })
         }
 
-        const validArticleInput = await validateArticleRegisteration(_.pick(req.body, ['articleTitle', 'articleDescription', 'articleContent', 'articleMainImage']));
+        if (req.file != undefined)
+            updatedArticle.articleMainImage = `${APP_DOMAIN}public/articles/${req.file.filename}`;
+
+        const validArticleInput = await validateArticleRegisteration(_.pick(updatedArticle, ['articleTitle', 'articleDescription', 'articleContent', 'articleMainImage']));
 
         if (validArticleInput.error) {
             return res.send(validArticleInput.error.details[0].message);
         }
 
-        await Articles.findOneAndUpdate({ _id: articleId }, req.body, { new: true })
+        await Articles.findOneAndUpdate({ _id: articleId }, updatedArticle, { new: true })
             .then(() => {
                 res.status(200).send({
                     success: true,
