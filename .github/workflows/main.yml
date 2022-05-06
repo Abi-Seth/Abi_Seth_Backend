@@ -33,7 +33,12 @@ jobs:
       run: npm run coverage
     
     - name: "Upload coverage report"
-      run: |
-        ci_env=`curl -s https://codecov.io/env`
-        npm install codecov -g
-        codecov -t 104f34bd-e77f-4f49-90ee-78e08168ec38
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v2
+        with:
+          token: 104f34bd-e77f-4f49-90ee-78e08168ec38 # not required for public repos
+          files: ./coverage1.xml,./coverage2.xml # optional
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
