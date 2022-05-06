@@ -86,7 +86,7 @@ describe('DELETE /api/v1/messages/:id', () => {
      */
 
     it('It should DELETE one message (by id)', (done) => {
-        const messageId = '6275759e86ad179068ae4753';
+        const messageId = '6274b9dcc777500fb49fdbc7';
 
         chai.request(server)
             .delete(`api/v1/messages/${messageId}`)

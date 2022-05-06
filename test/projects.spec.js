@@ -85,7 +85,7 @@ describe('DELETE /api/v1/projects/:id', () => {
      */
 
     it('It should DELETE one project (by id)', (done) => {
-        const projectId = '627575a086ad179068ae475b';
+        const projectId = '6275722686ad179068ae4719';
 
         chai.request(server)
             .delete(`api/v1/projects/${projectId}`)
