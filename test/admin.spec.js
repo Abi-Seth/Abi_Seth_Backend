@@ -324,7 +324,7 @@ describe('DELETE /api/v1/admin/:adminId', () => {
      */
 
     it('It should DELETE one administrator (by id)', (done) => {
-        const adminId = '6275721986ad179068ae46e7';
+        const adminId = '6275759386ad179068ae4729';
 
         chai.request(server)
             .delete(`api/v1/admin/${adminId}`)
