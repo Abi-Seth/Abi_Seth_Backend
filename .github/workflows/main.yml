@@ -34,7 +34,6 @@ jobs:
 
     - name: Upload coverage report
       uses: actions/checkout@master
-      uses: codecov/codecov-action@v2
       with:
         token: 104f34bd-e77f-4f49-90ee-78e08168ec38 # not required for public repos
         files: ./coverage1.xml,./coverage2.xml # optional
