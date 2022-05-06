@@ -145,7 +145,7 @@ describe('PUT /api/v1/articles/:id', () => {
         const articleId = '6273a2d22b77f8e4bcb5e58f';
 
         const newArticle = {
-            articleTitle: "New article 78",
+            articleTitle: "New article 503",
             articleDescription: "Article description",
             articleContent: "Article content",
             articleMainImage: `${APP_DOMAIN}public/public/updated_article_image.png` 
@@ -214,7 +214,7 @@ describe('DELETE /api/v1/articles/:id', () => {
      */
 
     it('It should DELETE one article (by id)', (done) => {
-        const articleId = '6273a21ed82044c0dcd282d0';
+        const articleId = '62757140ec54a5a657d4bab9';
 
         chai.request(server)
             .delete(`api/v1/articles/${articleId}`)

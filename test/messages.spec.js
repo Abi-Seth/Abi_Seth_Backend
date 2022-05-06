@@ -86,7 +86,7 @@ describe('DELETE /api/v1/messages/:id', () => {
      */
 
     it('It should DELETE one message (by id)', (done) => {
-        const messageId = '6273a2dc2b77f8e4bcb5e5a7';
+        const messageId = '6275759e86ad179068ae4753';
 
         chai.request(server)
             .delete(`api/v1/messages/${messageId}`)
@@ -131,7 +131,7 @@ describe('POST /api/v1/messages/:id', () => {
 
     it('It should POST a reply to a message', (done) => {
         const replyRad = Math.floor(Math.random()*1000);
-        const messageId = '6273a222d82044c0dcd282e7';
+        const messageId = '6275722586ad179068ae4711';
 
         const newReply = {
             messageHeading: `Message heading ${replyRad}`,
